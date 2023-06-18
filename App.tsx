@@ -4,6 +4,8 @@ import {Text} from './src/components/Text';
 import {ThemeProvider} from '@shopify/restyle';
 import {theme} from './src/theme';
 import {Button} from './src/components/Button';
+import {Icon} from './src/components/Icon';
+import {Box} from './src/components/Box';
 
 function App(): JSX.Element {
   return (
@@ -15,8 +17,18 @@ function App(): JSX.Element {
           <Button title="Primary" marginBottom="s12" />
           <Button disabled title="Primary disabled" marginBottom="s12" />
           <Button preset="outline" title="Outline" marginBottom="s12" />
+          <Button
+            disabled
+            preset="outline"
+            title="Loading"
+            loading
+            marginBottom="s12"
+          />
 
-          <Button disabled preset="outline" title="Loading" loading />
+          <Box flexDirection="row" marginBottom="s12">
+            <Icon name="eyeOn" color="error" size={30} />
+            <Icon name="eyeOff" color="success" size={30} />
+          </Box>
         </SafeAreaView>
       </View>
     </ThemeProvider>
