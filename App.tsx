@@ -1,36 +1,50 @@
 import React from 'react';
-import {SafeAreaView, StatusBar, View} from 'react-native';
+import {SafeAreaView, View} from 'react-native';
+
 import {Text} from './src/components/Text';
 import {ThemeProvider} from '@shopify/restyle';
 import {theme} from './src/theme';
 import {Button} from './src/components/Button';
-import {Icon} from './src/components/Icon';
 import {Box} from './src/components/Box';
+import {TextInput} from './src/components/TextInput';
+import {Icon} from './src/components/Icon';
 
 function App(): JSX.Element {
   return (
     <ThemeProvider theme={theme}>
-      <View style={{paddingHorizontal: 24}}>
-        <SafeAreaView>
-          <StatusBar barStyle={'light-content'} />
-          <Text preset="headingLarge">Nubble</Text>
-          <Button title="Primary" marginBottom="s12" />
-          <Button disabled title="Primary disabled" marginBottom="s12" />
-          <Button preset="outline" title="Outline" marginBottom="s12" />
-          <Button
-            disabled
-            preset="outline"
-            title="Loading"
-            loading
-            marginBottom="s12"
-          />
+      <SafeAreaView>
+        <View style={{paddingHorizontal: 24}}>
+          <Text marginBottom="s8" preset="headingLarge">
+            Olá
+          </Text>
+          <Text preset="paragraphLarge" mb="s40">
+            Digite seu e-mail e senha para entrar
+          </Text>
 
-          <Box flexDirection="row" marginBottom="s12">
-            <Icon name="eyeOn" color="error" size={30} />
-            <Icon name="eyeOff" color="success" size={30} />
+          <Box mb="s20">
+            <TextInput
+              placeholder="Digite seu e-mail"
+              label={'E-mail'}
+              boxProps={{mb: 's20'}}
+            />
           </Box>
-        </SafeAreaView>
-      </View>
+          <Box>
+            <TextInput
+              placeholder="Digite sua senha"
+              label={'Senha'}
+              RightComponent={<Icon name="eyeOn" color="gray2" />}
+              boxProps={{mb: 's10'}}
+            />
+          </Box>
+
+          <Text color="primary" preset="paragraphSmall" bold mt="s10">
+            Esqueci minha senha
+          </Text>
+
+          <Button marginTop="s48" title="Entrar" />
+          <Button preset="outline" marginTop="s12" title="Criar uma conta" />
+        </View>
+      </SafeAreaView>
     </ThemeProvider>
   );
 }
