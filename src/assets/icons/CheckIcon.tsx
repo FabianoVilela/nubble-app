@@ -2,7 +2,7 @@ import React from 'react';
 
 import {Svg, Path} from 'react-native-svg';
 
-import {IconBase} from '../../components/Icon/Icon';
+import {IconBase} from '../../components/Icon';
 
 export function CheckIcon({size = 20, color = 'black'}: IconBase) {
   return (
