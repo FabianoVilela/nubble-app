@@ -1,11 +1,17 @@
 import React from 'react';
+import {NativeStackScreenProps} from '@react-navigation/native-stack';
+
 import {Text} from '../../../components/Text';
 import {TextInput} from '../../../components/TextInput';
 import {Button} from '../../../components/Button';
 import {Screen} from '../../../components/Screen';
 import {PasswordInput} from '../../../components/PasswordInput';
 
-export function SignUp() {
+import {RootStackParamList} from '../../../routes/Routes';
+
+type ScreenProps = NativeStackScreenProps<RootStackParamList, 'SignUpScreen'>;
+
+export function SignUp({navigation}: ScreenProps) {
   function submitForm() {
     // TODO: To implement
   }
@@ -31,7 +37,7 @@ export function SignUp() {
         placeholder="Digite sua senha"
         boxProps={{mb: 's48'}}
       />
-      <Button onPress={submitForm} title="Criar uma conta" />
+      <Button title="Criar uma conta" onPress={submitForm} />
     </Screen>
   );
 }
