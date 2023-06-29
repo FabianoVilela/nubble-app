@@ -5,16 +5,18 @@ import {
   TextInputProps as RNTextInputProps,
   TextStyle,
 } from 'react-native';
+
 import {useAppTheme} from '../../hooks/useAppTheme';
 import {Box, BoxProps} from '../Box';
 import {$fontFamily, $fontSizes, Text} from '../Text';
 
-interface TextInputProps extends RNTextInputProps {
+export interface TextInputProps extends RNTextInputProps {
   label: string;
   errorMessage?: string;
   RightComponent?: React.ReactElement;
   boxProps?: BoxProps;
 }
+
 export function TextInput({
   label,
   errorMessage,
