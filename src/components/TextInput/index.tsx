@@ -38,6 +38,7 @@ export function TextInput({
   function focusInput() {
     inputRef.current?.focus();
   }
+
   return (
     <Box {...boxProps}>
       <Pressable onPress={focusInput}>
