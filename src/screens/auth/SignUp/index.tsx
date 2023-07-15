@@ -42,6 +42,7 @@ export function SignUp({navigation}: ScreenProps) {
         label="E-mail"
         placeholder="Digite seu e-mail"
         boxProps={{mb: 's20'}}
+        keyboardType="email-address"
       />
       <PasswordInput
         label="Senha"
