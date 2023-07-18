@@ -1,6 +1,7 @@
 import React from 'react';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {useForm} from 'react-hook-form';
+import {zodResolver} from '@hookform/resolvers/zod';
 
 import {Text} from '../../../components/Text';
 import {Button} from '../../../components/Button';
@@ -9,13 +10,9 @@ import {FormTextInput} from '../../../components/Form/FormTextInput';
 import {FormPasswordInput} from '../../../components/Form/FormPasswordInput';
 
 import {RootStackParamList} from '../../../routes/Routes';
+import {LoginSchema, loginSchema} from './schema';
 
 type ScreenProps = NativeStackScreenProps<RootStackParamList, 'LoginScreen'>;
-
-type LoginFormType = {
-  email: string;
-  password: string;
-};
 
 export function Login({navigation}: ScreenProps) {
   function navigateToSignUpScreen() {
@@ -26,7 +23,8 @@ export function Login({navigation}: ScreenProps) {
     navigation.navigate('ForgotPasswordScreen');
   }
 
-  const {control, formState, handleSubmit} = useForm<LoginFormType>({
+  const {control, formState, handleSubmit} = useForm<LoginSchema>({
+    resolver: zodResolver(loginSchema),
     defaultValues: {
       email: '',
       password: '',
@@ -34,7 +32,7 @@ export function Login({navigation}: ScreenProps) {
     mode: 'onChange',
   });
 
-  function submitForm({email, password}: LoginFormType) {
+  function submitForm({email, password}: LoginSchema) {
     console.log(`Email: ${email} ${'\n'} Senha: ${password}`);
   }
 
@@ -50,13 +48,6 @@ export function Login({navigation}: ScreenProps) {
       <FormTextInput
         control={control}
         name="email"
-        rules={{
-          required: 'E-mail obrigatório',
-          pattern: {
-            value: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/,
-            message: 'E-mail inválido',
-          },
-        }}
         label="E-mail"
         placeholder="Digite seu e-mail"
         boxProps={{mb: 's20'}}
@@ -66,13 +57,6 @@ export function Login({navigation}: ScreenProps) {
       <FormPasswordInput
         control={control}
         name="password"
-        rules={{
-          required: 'Senha obrigatória',
-          minLength: {
-            value: 8,
-            message: 'Senha deve ter no mínimo 8 caracteres',
-          },
-        }}
         label="Senha"
         placeholder="Digite sua senha"
         boxProps={{mb: 's20'}}
