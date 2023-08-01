@@ -6,7 +6,7 @@ import {Login} from '../screens/auth/Login';
 import {SignUp} from '../screens/auth/SignUp';
 import {Success} from '../screens/auth/Success';
 import {ForgotPassword} from '../screens/auth/ForgotPassword';
-import {IconProps} from '../components/Icon';
+import {IconProps} from '@components';
 
 export type RootStackParamList = {
   LoginScreen: undefined;
