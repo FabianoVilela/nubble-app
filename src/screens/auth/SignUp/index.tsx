@@ -1,7 +1,8 @@
 import React from 'react';
-import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import {useForm} from 'react-hook-form';
-import {zodResolver} from '@hookform/resolvers/zod';
+
+import { zodResolver } from '@hookform/resolvers/zod';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { useForm } from 'react-hook-form';
 
 import {
   Button,
@@ -10,18 +11,19 @@ import {
   FormTextInput,
   FormPasswordInput,
 } from '@components';
+import { useResetNavigationSuccess } from '@hooks';
 
-import {RootStackParamList} from '../../../routes/Routes';
-import {useResetNavigationSuccess} from '@hooks';
-import {SignUpSchema, signUpSchema} from './schema';
+import { RootStackParamList } from '../../../routes/Routes';
+
+import { SignUpSchema, signUpSchema } from './schema';
 
 type ScreenProps = NativeStackScreenProps<RootStackParamList, 'SignUpScreen'>;
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-export function SignUp({navigation}: ScreenProps) {
-  const {reset} = useResetNavigationSuccess();
+export function SignUp({ navigation }: ScreenProps) {
+  const { reset } = useResetNavigationSuccess();
 
-  const {control, formState, handleSubmit} = useForm<SignUpSchema>({
+  const { control, formState, handleSubmit } = useForm<SignUpSchema>({
     resolver: zodResolver(signUpSchema),
     defaultValues: {
       username: '',
@@ -55,10 +57,10 @@ export function SignUp({navigation}: ScreenProps) {
       <FormTextInput
         control={control}
         name="username"
-        rules={{required: 'Username obrigatório'}}
+        rules={{ required: 'Username obrigatório' }}
         label="Seu username"
         placeholder="@"
-        boxProps={{mb: 's20'}}
+        boxProps={{ mb: 's20' }}
       />
 
       <FormTextInput
@@ -66,7 +68,7 @@ export function SignUp({navigation}: ScreenProps) {
         name="fullName"
         label="Nome Completo"
         placeholder="Digite seu nome completo"
-        boxProps={{mb: 's20'}}
+        boxProps={{ mb: 's20' }}
       />
 
       <FormTextInput
@@ -74,7 +76,7 @@ export function SignUp({navigation}: ScreenProps) {
         name="email"
         label="E-mail"
         placeholder="Digite seu e-mail"
-        boxProps={{mb: 's20'}}
+        boxProps={{ mb: 's20' }}
         keyboardType="email-address"
       />
 
@@ -83,7 +85,7 @@ export function SignUp({navigation}: ScreenProps) {
         name="password"
         label="Senha"
         placeholder="Digite sua senha"
-        boxProps={{mb: 's48'}}
+        boxProps={{ mb: 's48' }}
       />
 
       <Button
