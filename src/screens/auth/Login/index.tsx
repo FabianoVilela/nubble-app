@@ -1,8 +1,9 @@
 import React from 'react';
 
-import {zodResolver} from '@hookform/resolvers/zod';
-import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import {useForm} from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { useForm } from 'react-hook-form';
+import { RootStackParamList } from 'src/routes/Routes';
 
 import {
   Text,
@@ -12,13 +13,11 @@ import {
   FormPasswordInput,
 } from '@components';
 
-import {RootStackParamList} from '../../../routes/Routes';
-
-import {LoginSchema, loginSchema} from './schema';
+import { LoginSchema, loginSchema } from './schema';
 
 type ScreenProps = NativeStackScreenProps<RootStackParamList, 'LoginScreen'>;
 
-export function Login({navigation}: ScreenProps) {
+export function Login({ navigation }: ScreenProps) {
   function navigateToSignUpScreen() {
     navigation.navigate('SignUpScreen');
   }
@@ -27,7 +26,7 @@ export function Login({navigation}: ScreenProps) {
     navigation.navigate('ForgotPasswordScreen');
   }
 
-  const {control, formState, handleSubmit} = useForm<LoginSchema>({
+  const { control, formState, handleSubmit } = useForm<LoginSchema>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
       email: '',
@@ -36,7 +35,7 @@ export function Login({navigation}: ScreenProps) {
     mode: 'onChange',
   });
 
-  function submitForm({email, password}: LoginSchema) {
+  function submitForm({ email, password }: LoginSchema) {
     console.log(`Email: ${email} ${'\n'} Senha: ${password}`);
   }
 
@@ -54,7 +53,7 @@ export function Login({navigation}: ScreenProps) {
         name="email"
         label="E-mail"
         placeholder="Digite seu e-mail"
-        boxProps={{mb: 's20'}}
+        boxProps={{ mb: 's20' }}
         keyboardType="email-address"
       />
 
@@ -63,7 +62,7 @@ export function Login({navigation}: ScreenProps) {
         name="password"
         label="Senha"
         placeholder="Digite sua senha"
-        boxProps={{mb: 's20'}}
+        boxProps={{ mb: 's20' }}
       />
 
       <Text

@@ -1,5 +1,5 @@
-import {useNavigation} from '@react-navigation/native';
-import {RootStackParamList} from '../routes/Routes';
+import { useNavigation } from '@react-navigation/native';
+import { RootStackParamList } from 'src/routes/Routes';
 
 export function useResetNavigationSuccess() {
   const navigation = useNavigation();
@@ -19,5 +19,5 @@ export function useResetNavigationSuccess() {
     });
   }
 
-  return {reset};
+  return { reset };
 }

@@ -1,12 +1,18 @@
 import React from 'react';
-import {KeyboardAvoidingView, Platform} from 'react-native';
-import {Box, TouchableOpacityBox} from '../Box';
-import {useAppSafeArea} from '../../hooks/useAppSafeArea';
-import {Icon} from '../Icon';
-import {Text} from '../Text';
-import {ScrollViewContainer, ViewContainer} from './components/ScreenContainer';
-import {useAppTheme} from '../../hooks/useAppTheme';
-import {useNavigation} from '@react-navigation/native';
+import { KeyboardAvoidingView, Platform } from 'react-native';
+
+import { useNavigation } from '@react-navigation/native';
+
+import { useAppSafeArea } from '../../hooks/useAppSafeArea';
+import { useAppTheme } from '../../hooks/useAppTheme';
+import { Box, TouchableOpacityBox } from '../Box';
+import { Icon } from '../Icon';
+import { Text } from '../Text';
+
+import {
+  ScrollViewContainer,
+  ViewContainer,
+} from './components/ScreenContainer';
 
 interface ScreenProps {
   children: React.ReactNode;
@@ -20,20 +26,20 @@ export function Screen({
   scrollable = false,
 }: ScreenProps) {
   const navigation = useNavigation();
-  const {bottom, top} = useAppSafeArea();
-  const {colors} = useAppTheme();
+  const { bottom, top } = useAppSafeArea();
+  const { colors } = useAppTheme();
 
   const Container = scrollable ? ScrollViewContainer : ViewContainer;
 
   return (
     <KeyboardAvoidingView
-      style={{flex: 1}}
+      style={{ flex: 1 }}
       behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
       <Container backgroundColor={colors.background}>
         <Box
           paddingBottom="s24"
           paddingHorizontal="s24"
-          style={{paddingTop: top, paddingBottom: bottom}}>
+          style={{ paddingTop: top, paddingBottom: bottom }}>
           {canGoBack && (
             <TouchableOpacityBox
               mb="s24"

@@ -3,6 +3,7 @@ import React from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useForm } from 'react-hook-form';
+import { RootStackParamList } from 'src/routes/Routes';
 
 import {
   Button,
@@ -12,8 +13,6 @@ import {
   FormPasswordInput,
 } from '@components';
 import { useResetNavigationSuccess } from '@hooks';
-
-import { RootStackParamList } from '../../../routes/Routes';
 
 import { SignUpSchema, signUpSchema } from './schema';
 

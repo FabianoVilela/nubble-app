@@ -1,12 +1,14 @@
 import React from 'react';
-import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import {useForm} from 'react-hook-form';
-import {zodResolver} from '@hookform/resolvers/zod';
 
-import {Button, Screen, Text, FormTextInput} from '@components';
-import {RootStackParamList} from '../../../routes/Routes';
-import {useResetNavigationSuccess} from '../../../hooks';
-import {forgotPasswordSchema, ForgotPasswordSchema} from './schema';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { useForm } from 'react-hook-form';
+import { RootStackParamList } from 'src/routes/Routes';
+
+import { Button, Screen, Text, FormTextInput } from '@components';
+import { useResetNavigationSuccess } from '@hooks';
+
+import { forgotPasswordSchema, ForgotPasswordSchema } from './schema';
 
 type ScreenProps = NativeStackScreenProps<
   RootStackParamList,
@@ -14,10 +16,10 @@ type ScreenProps = NativeStackScreenProps<
 >;
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-export function ForgotPassword({navigation}: ScreenProps) {
-  const {reset} = useResetNavigationSuccess();
+export function ForgotPassword({ navigation }: ScreenProps) {
+  const { reset } = useResetNavigationSuccess();
 
-  const {control, formState, handleSubmit} = useForm<ForgotPasswordSchema>({
+  const { control, formState, handleSubmit } = useForm<ForgotPasswordSchema>({
     resolver: zodResolver(forgotPasswordSchema),
     defaultValues: {
       email: '',
@@ -52,7 +54,7 @@ export function ForgotPassword({navigation}: ScreenProps) {
         name="email"
         label="E-mail"
         placeholder="Digite seu e-mail"
-        boxProps={{mb: 's40'}}
+        boxProps={{ mb: 's40' }}
         keyboardType="email-address"
       />
       <Button
