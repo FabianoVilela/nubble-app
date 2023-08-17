@@ -38,4 +38,10 @@ module.exports = {
       },
     },
   ],
+  rules: {
+    'react/react-in-jsx-scope': 0,
+    'react-native/no-inline-styles': 0,
+    'no-console': ['error', { allow: [''] }],
+  },
+  ignorePatterns: ['.eslintrc.js'],
 };

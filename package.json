@@ -7,9 +7,14 @@
     "ios": "react-native run-ios",
     "lint": "eslint .",
     "start": "react-native start",
-    "test": "jest"
+    "test": "jest",
+    "prepare": "husky install",
+    "commitlint": "commitlint --edit",
+    "commit": "npx git-cz"
   },
   "dependencies": {
+    "@commitlint/cli": "^17.7.1",
+    "@commitlint/config-conventional": "^17.7.0",
     "@hookform/resolvers": "^3.1.1",
     "@react-navigation/native": "^6.1.7",
     "@react-navigation/native-stack": "^6.9.13",
@@ -33,9 +38,13 @@
     "@types/react-test-renderer": "^18.0.0",
     "babel-jest": "^29.2.1",
     "babel-plugin-module-resolver": "^5.0.0",
+    "commitizen": "^4.3.0",
+    "cz-conventional-changelog": "^3.3.0",
     "eslint": "^8.19.0",
     "eslint-plugin-import": "^2.28.0",
+    "husky": "^8.0.3",
     "jest": "^29.2.1",
+    "lint-staged": "^14.0.0",
     "metro-react-native-babel-preset": "0.73.9",
     "prettier": "^2.4.1",
     "react-test-renderer": "18.2.0",
@@ -43,5 +52,10 @@
   },
   "jest": {
     "preset": "react-native"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
   }
 }
