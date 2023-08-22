@@ -1,14 +1,10 @@
 import React from 'react';
 
-import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { AppStackParamList } from 'src/routes/AppStack';
-
 import { Screen, Text } from '@components';
-
-type ScreenProps = NativeStackScreenProps<AppStackParamList, 'SettingsScreen'>;
+import { AppScreenProps } from '@routes';
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-export function Settings(props: ScreenProps) {
+export function Settings(props: AppScreenProps<'SettingsScreen'>) {
   return (
     <Screen canGoBack>
       <Text preset="headingSmall">Setting Screen</Text>
