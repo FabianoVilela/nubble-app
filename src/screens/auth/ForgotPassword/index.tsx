@@ -1,22 +1,18 @@
 import React from 'react';
 
 import { zodResolver } from '@hookform/resolvers/zod';
-import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useForm } from 'react-hook-form';
-import { RootStackParamList } from 'src/routes/Routes';
 
-import { Button, Screen, Text, FormTextInput } from '@components';
+import { Button, FormTextInput, Screen, Text } from '@components';
 import { useResetNavigationSuccess } from '@hooks';
+import { AuthScreenProps } from '@routes';
 
-import { forgotPasswordSchema, ForgotPasswordSchema } from './schema';
+import { ForgotPasswordSchema, forgotPasswordSchema } from './schema';
 
-type ScreenProps = NativeStackScreenProps<
-  RootStackParamList,
-  'ForgotPasswordScreen'
->;
-
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-export function ForgotPassword({ navigation }: ScreenProps) {
+export function ForgotPassword({
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  navigation,
+}: AuthScreenProps<'ForgotPasswordScreen'>) {
   const { reset } = useResetNavigationSuccess();
 
   const { control, formState, handleSubmit } = useForm<ForgotPasswordSchema>({
@@ -27,10 +23,10 @@ export function ForgotPassword({ navigation }: ScreenProps) {
     mode: 'onChange',
   });
 
-  function submitForm() {
-    // TODO: submit form
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  function submitForm(values: ForgotPasswordSchema) {
     reset({
-      title: 'Enviamos as instruções para seu e-mail',
+      title: `Enviamos as instruções ${'\n'}para seu e-mail`,
       description:
         'Clique no link enviado no seu e-mail para recuperar sua senha',
       icon: {
@@ -39,7 +35,6 @@ export function ForgotPassword({ navigation }: ScreenProps) {
       },
     });
   }
-
   return (
     <Screen canGoBack>
       <Text preset="headingLarge" mb="s16">

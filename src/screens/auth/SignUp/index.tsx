@@ -1,27 +1,23 @@
 import React from 'react';
 
 import { zodResolver } from '@hookform/resolvers/zod';
-import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useForm } from 'react-hook-form';
-import { RootStackParamList } from 'src/routes/Routes';
 
 import {
   Button,
-  Text,
-  Screen,
-  FormTextInput,
   FormPasswordInput,
+  FormTextInput,
+  Screen,
+  Text,
 } from '@components';
 import { useResetNavigationSuccess } from '@hooks';
+import { AuthScreenProps } from '@routes';
 
-import { SignUpSchema, signUpSchema } from './schema';
-
-type ScreenProps = NativeStackScreenProps<RootStackParamList, 'SignUpScreen'>;
+import { signUpSchema, SignUpSchema } from './schema';
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-export function SignUp({ navigation }: ScreenProps) {
+export function SignUp({ navigation }: AuthScreenProps<'SignUpScreen'>) {
   const { reset } = useResetNavigationSuccess();
-
   const { control, formState, handleSubmit } = useForm<SignUpSchema>({
     resolver: zodResolver(signUpSchema),
     defaultValues: {
@@ -35,8 +31,6 @@ export function SignUp({ navigation }: ScreenProps) {
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   function submitForm(formValues: SignUpSchema) {
-    // TODO: Submit form
-
     reset({
       title: 'Sua conta foi criada com sucesso!',
       description: 'Agora é só fazer login na nossa plataforma',
@@ -46,7 +40,6 @@ export function SignUp({ navigation }: ScreenProps) {
       },
     });
   }
-
   return (
     <Screen canGoBack scrollable>
       <Text preset="headingLarge" mb="s32">
@@ -56,7 +49,6 @@ export function SignUp({ navigation }: ScreenProps) {
       <FormTextInput
         control={control}
         name="username"
-        rules={{ required: 'Username obrigatório' }}
         label="Seu username"
         placeholder="@"
         boxProps={{ mb: 's20' }}
@@ -65,18 +57,17 @@ export function SignUp({ navigation }: ScreenProps) {
       <FormTextInput
         control={control}
         name="fullName"
+        autoCapitalize="words"
         label="Nome Completo"
         placeholder="Digite seu nome completo"
         boxProps={{ mb: 's20' }}
       />
-
       <FormTextInput
         control={control}
         name="email"
         label="E-mail"
         placeholder="Digite seu e-mail"
         boxProps={{ mb: 's20' }}
-        keyboardType="email-address"
       />
 
       <FormPasswordInput
@@ -88,9 +79,9 @@ export function SignUp({ navigation }: ScreenProps) {
       />
 
       <Button
-        title="Criar uma conta"
         disabled={!formState.isValid}
         onPress={handleSubmit(submitForm)}
+        title="Criar uma conta"
       />
     </Screen>
   );

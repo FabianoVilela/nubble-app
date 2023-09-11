@@ -1,31 +1,21 @@
 import React from 'react';
+import { Alert } from 'react-native';
 
 import { zodResolver } from '@hookform/resolvers/zod';
-import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useForm } from 'react-hook-form';
-import { RootStackParamList } from 'src/routes/Routes';
 
 import {
   Text,
-  Button,
   Screen,
+  Button,
   FormTextInput,
   FormPasswordInput,
 } from '@components';
+import { AuthScreenProps } from '@routes';
 
-import { LoginSchema, loginSchema } from './schema';
+import { LoginSchema, loginSchema } from './schema/index';
 
-type ScreenProps = NativeStackScreenProps<RootStackParamList, 'LoginScreen'>;
-
-export function Login({ navigation }: ScreenProps) {
-  function navigateToSignUpScreen() {
-    navigation.navigate('SignUpScreen');
-  }
-
-  function navigateToForgotPasswordScreen() {
-    navigation.navigate('ForgotPasswordScreen');
-  }
-
+export function Login({ navigation }: AuthScreenProps<'LoginScreen'>) {
   const { control, formState, handleSubmit } = useForm<LoginSchema>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
@@ -36,9 +26,16 @@ export function Login({ navigation }: ScreenProps) {
   });
 
   function submitForm({ email, password }: LoginSchema) {
-    console.log(`Email: ${email} ${'\n'} Senha: ${password}`);
+    Alert.alert(`Email: ${email} ${'\n'} Senha: ${password}`);
   }
 
+  function navigateToSignUpScreen() {
+    navigation.navigate('SignUpScreen');
+  }
+
+  function navigateToForgotPasswordScreen() {
+    navigation.navigate('ForgotPasswordScreen');
+  }
   return (
     <Screen scrollable>
       <Text marginBottom="s8" preset="headingLarge">
@@ -54,7 +51,6 @@ export function Login({ navigation }: ScreenProps) {
         label="E-mail"
         placeholder="Digite seu e-mail"
         boxProps={{ mb: 's20' }}
-        keyboardType="email-address"
       />
 
       <FormPasswordInput
@@ -66,24 +62,24 @@ export function Login({ navigation }: ScreenProps) {
       />
 
       <Text
+        onPress={navigateToForgotPasswordScreen}
         color="primary"
         preset="paragraphSmall"
-        bold
-        mt="s10"
-        onPress={navigateToForgotPasswordScreen}>
+        bold>
         Esqueci minha senha
       </Text>
+
       <Button
-        marginTop="s48"
-        title="Entrar"
         disabled={!formState.isValid}
         onPress={handleSubmit(submitForm)}
+        marginTop="s48"
+        title="Entrar"
       />
       <Button
+        onPress={navigateToSignUpScreen}
         preset="outline"
         marginTop="s12"
         title="Criar uma conta"
-        onPress={navigateToSignUpScreen}
       />
     </Screen>
   );
