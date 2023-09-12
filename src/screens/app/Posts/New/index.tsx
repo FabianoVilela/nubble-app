@@ -1,6 +1,8 @@
 import { Screen, Text } from '@components';
+import { AppTabScreenProps } from '@routes';
 
-export function New() {
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+export function New(props: AppTabScreenProps<'NewPostScreen'>) {
   return (
     <Screen>
       <Text>New Post</Text>

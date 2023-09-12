@@ -1,9 +1,9 @@
 import React from 'react';
 
 import { Button, Screen, Text } from '@components';
-import { AppScreenProps } from '@routes';
+import { AppTabScreenProps } from '@routes';
 
-export function Home({ navigation }: AppScreenProps<'HomeScreen'>) {
+export function Home({ navigation }: AppTabScreenProps<'HomeScreen'>) {
   return (
     <Screen>
       <Text preset="headingLarge">Home Screen</Text>

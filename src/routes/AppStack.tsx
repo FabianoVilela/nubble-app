@@ -1,14 +1,14 @@
 import React from 'react';
 
+import { NavigatorScreenParams } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import { Settings } from '@screens';
 
-import { AppTabNavigator } from './AppTabNavigator';
+import { AppTabBottomTabParamList, AppTabNavigator } from './AppTabNavigator';
 
 export type AppStackParamList = {
-  // HomeScreen: undefined;
-  AppTabNavigator: undefined;
+  AppTabNavigator: NavigatorScreenParams<AppTabBottomTabParamList>;
   SettingsScreen: undefined;
 };
 
