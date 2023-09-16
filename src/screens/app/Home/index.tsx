@@ -19,15 +19,20 @@ export function Home({ navigation }: AppTabScreenProps<'HomeScreen'>) {
     postService.getList().then(postList => setPosts(postList));
   }, []);
 
-  function renderItem({ item }: ListRenderItemInfo<Post>) {
+  function renderItem({ item: post }: ListRenderItemInfo<Post>) {
     return (
       <PostItem.Root>
-        <PostItem.Header author={item.author} />
-        <PostItem.Content imageURL={item.imageURL} />
+        <PostItem.Header author={post.author} />
+        <PostItem.Content imageURL={post.imageURL} />
         <PostItem.Actions
-          favoriteCount={item.favoriteCount}
-          commentCount={item.commentCount}
-          reactionCount={item.reactionCount}
+          favoriteCount={post.favoriteCount}
+          commentCount={post.commentCount}
+          reactionCount={post.reactionCount}
+        />
+        <PostItem.Footer
+          author={post.author}
+          text={post.text}
+          commentCount={post.commentCount}
         />
       </PostItem.Root>
     );
