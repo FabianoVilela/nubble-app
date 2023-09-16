@@ -1,15 +1,39 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { FlatList, ListRenderItemInfo } from 'react-native';
 
-import { Button, Screen, Text } from '@components';
+import { Post, postService } from '@domain';
+
+import { Screen, PostItem } from '@components';
 import { AppTabScreenProps } from '@routes';
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export function Home({ navigation }: AppTabScreenProps<'HomeScreen'>) {
+  const [posts, setPosts] = React.useState<Post[]>([]);
+
+  useEffect(() => {
+    postService.getList().then(postList => setPosts(postList));
+  }, []);
+
+  function renderItem({ item }: ListRenderItemInfo<Post>) {
+    return (
+      <PostItem.Root>
+        <PostItem.Header author={item.author} />
+        <PostItem.Content imageURL={item.imageURL} />
+        <PostItem.Actions
+          favoriteCount={item.favoriteCount}
+          commentCount={item.commentCount}
+          reactionCount={item.reactionCount}
+        />
+      </PostItem.Root>
+    );
+  }
+
   return (
     <Screen>
-      <Text preset="headingLarge">Home Screen</Text>
-      <Button
-        title="Settings"
-        onPress={() => navigation.navigate('SettingsScreen')}
+      <FlatList
+        data={posts}
+        keyExtractor={item => item.id}
+        renderItem={renderItem}
       />
     </Screen>
   );
