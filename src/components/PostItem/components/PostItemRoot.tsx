@@ -7,5 +7,9 @@ interface PostItemRootProps {
 }
 
 export function PostItemRoot({ children }: PostItemRootProps) {
-  return <Box marginBottom="s24">{children}</Box>;
+  return (
+    <Box marginBottom="s24" px="s24">
+      {children}
+    </Box>
+  );
 }

@@ -1,4 +1,4 @@
-import { Dimensions, Image } from 'react-native';
+import { Dimensions, Image, ImageStyle, StyleProp } from 'react-native';
 
 import { Post } from '@domain';
 
@@ -10,8 +10,13 @@ export function PostItemContent({ imageURL }: PostItemContentProps) {
   return (
     <Image
       source={{ uri: imageURL }}
-      style={{ width: width, height: 250 }}
+      style={[{ width: width }, $image]}
       resizeMode="cover"
     />
   );
 }
+
+const $image: StyleProp<ImageStyle> = {
+  height: 250,
+  marginHorizontal: -24,
+};
