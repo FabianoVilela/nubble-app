@@ -11,6 +11,8 @@ import { Post, postService } from '@domain';
 import { Screen, PostItem } from '@components';
 import { AppTabScreenProps } from '@routes';
 
+import { Header } from './components/Header';
+
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export function Home({ navigation }: AppTabScreenProps<'HomeScreen'>) {
   const [posts, setPosts] = React.useState<Post[]>([]);
@@ -40,11 +42,13 @@ export function Home({ navigation }: AppTabScreenProps<'HomeScreen'>) {
 
   return (
     <Screen style={$screen}>
+      <Header />
       <FlatList
         data={posts}
         keyExtractor={item => item.id}
         renderItem={renderItem}
         showsVerticalScrollIndicator={false}
+        // ListHeaderComponent={<Header />}
       />
     </Screen>
   );
