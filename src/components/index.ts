@@ -2,6 +2,7 @@
 export * from './ActivityIndicator';
 export * from './Box';
 export * from './Button';
+export * from './EmptyState';
 export * from './Form/FormPasswordInput';
 export * from './Form/FormTextInput';
 export * from './Icon';
