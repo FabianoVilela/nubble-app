@@ -12,9 +12,9 @@ export interface MetaDataPageAPI {
 
 /**
  * @description Interface for API data response
- * @template Data Response data type
+ * @template T Response data type
  */
-export interface PageAPI<Data> {
-  data: Data[];
+export interface PageAPI<T> {
+  data: T[];
   meta: MetaDataPageAPI;
 }

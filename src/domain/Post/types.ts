@@ -1,6 +1,27 @@
 import { User } from '@domain';
 
+interface Meta {
+  like_count: string;
+  favorite_count: string;
+  comments_count: string;
+}
+
 export interface Post {
+  id: number;
+  text: string;
+  author: {
+    profileURL: string;
+    name: string;
+    userName: string;
+    id: number;
+  };
+  imageURL: string;
+  reactionCount: number;
+  commentCount: number;
+  favoriteCount: number;
+}
+
+export interface PostAPI {
   id: number;
   text: string;
   user_id: number;
@@ -12,10 +33,4 @@ export interface Post {
   user: User;
   status: string;
   meta: Meta;
-}
-
-export interface Meta {
-  like_count: string;
-  favorite_count: string;
-  comments_count: string;
 }

@@ -2,7 +2,7 @@ import { PageAPI } from '@api';
 
 import { Post } from './types';
 
-async function getList(): Promise<PageAPI<Post>> {
+const getList = async (): Promise<PageAPI<Post>> => {
   // TODO:Create API URL constant
   let response = await fetch('http://192.168.0.116:3333/user/post', {
     method: 'GET',
@@ -15,7 +15,7 @@ async function getList(): Promise<PageAPI<Post>> {
   let data: PageAPI<Post> = await response.json();
 
   return data;
-}
+};
 
 export const postApi = {
   getList,
