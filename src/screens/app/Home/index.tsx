@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import {
   FlatList,
   ListRenderItemInfo,
@@ -6,7 +6,7 @@ import {
   ViewStyle,
 } from 'react-native';
 
-import { Post, postService } from '@domain';
+import { Post, usePostList } from '@domain';
 
 import { Screen, PostItem, EmptyState, EmptyStateMessages } from '@components';
 import { AppTabScreenProps } from '@routes';
@@ -15,32 +15,12 @@ import { Header } from './components/Header';
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export const Home = ({ navigation }: AppTabScreenProps<'HomeScreen'>) => {
-  const [posts, setPosts] = React.useState<Post[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<boolean | null>(null);
-
   const messages: EmptyStateMessages = {
     empty: 'Não há publicações no seu feed',
     error: 'Não foi possível carregar o feed 😢',
   };
 
-  const fetchPosts = async () => {
-    try {
-      setError(null);
-      setLoading(true);
-
-      const data = await postService.getList();
-      setPosts(data);
-    } catch (er) {
-      setError(true);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    fetchPosts();
-  }, []);
+  const { postList, refetch, error, loading } = usePostList();
 
   const keyExtractor = (item: { id: number }): string => item.id.toString();
 
@@ -66,7 +46,7 @@ export const Home = ({ navigation }: AppTabScreenProps<'HomeScreen'>) => {
   const renderEmpty = () => {
     return (
       <EmptyState
-        refetch={fetchPosts}
+        refetch={refetch}
         error={error}
         loading={loading}
         messages={messages}
@@ -78,12 +58,12 @@ export const Home = ({ navigation }: AppTabScreenProps<'HomeScreen'>) => {
     <Screen style={$screen}>
       <Header />
       <FlatList
-        data={posts}
+        data={postList}
         keyExtractor={keyExtractor}
         renderItem={renderItem}
         showsVerticalScrollIndicator={false}
         ListEmptyComponent={renderEmpty}
-        contentContainerStyle={{ flex: !posts.length ? 1 : undefined }}
+        contentContainerStyle={{ flex: !postList.length ? 1 : undefined }}
       />
     </Screen>
   );
