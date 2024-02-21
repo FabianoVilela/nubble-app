@@ -20,7 +20,7 @@ export const Home = ({ navigation }: AppTabScreenProps<'HomeScreen'>) => {
     error: 'Não foi possível carregar o feed 😢',
   };
 
-  const { postList, refetch, error, loading } = usePostList();
+  const { postList, refetch, error, loading, fetchNextPage } = usePostList();
 
   const keyExtractor = (item: { id: number }): string => item.id.toString();
 
@@ -61,6 +61,8 @@ export const Home = ({ navigation }: AppTabScreenProps<'HomeScreen'>) => {
         data={postList}
         keyExtractor={keyExtractor}
         renderItem={renderItem}
+        onEndReached={fetchNextPage}
+        onEndReachedThreshold={0.1}
         showsVerticalScrollIndicator={false}
         ListEmptyComponent={renderEmpty}
         contentContainerStyle={{ flex: !postList.length ? 1 : undefined }}
