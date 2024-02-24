@@ -8,6 +8,7 @@ import {
 } from 'react-native';
 
 import { Post, usePostList } from '@domain';
+import { useScrollToTop } from '@react-navigation/native';
 
 import { Screen, PostItem, EmptyState, EmptyStateMessages } from '@components';
 import { AppTabScreenProps } from '@routes';
@@ -22,6 +23,9 @@ export const Home = ({ navigation }: AppTabScreenProps<'HomeScreen'>) => {
   };
 
   const { postList, refresh, error, loading, fetchNextPage } = usePostList();
+
+  const flatListRef = React.useRef<FlatList<Post>>(null);
+  useScrollToTop(flatListRef);
 
   const keyExtractor = (item: { id: number }): string => item.id.toString();
 
@@ -59,6 +63,7 @@ export const Home = ({ navigation }: AppTabScreenProps<'HomeScreen'>) => {
     <Screen style={$screen}>
       <Header />
       <FlatList
+        ref={flatListRef}
         data={postList}
         keyExtractor={keyExtractor}
         renderItem={renderItem}
