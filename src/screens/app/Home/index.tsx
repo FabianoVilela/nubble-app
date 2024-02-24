@@ -2,6 +2,7 @@ import React from 'react';
 import {
   FlatList,
   ListRenderItemInfo,
+  RefreshControl,
   StyleProp,
   ViewStyle,
 } from 'react-native';
@@ -20,7 +21,7 @@ export const Home = ({ navigation }: AppTabScreenProps<'HomeScreen'>) => {
     error: 'Não foi possível carregar o feed 😢',
   };
 
-  const { postList, refetch, error, loading, fetchNextPage } = usePostList();
+  const { postList, refresh, error, loading, fetchNextPage } = usePostList();
 
   const keyExtractor = (item: { id: number }): string => item.id.toString();
 
@@ -46,7 +47,7 @@ export const Home = ({ navigation }: AppTabScreenProps<'HomeScreen'>) => {
   const renderEmpty = () => {
     return (
       <EmptyState
-        refetch={refetch}
+        refetch={refresh}
         error={error}
         loading={loading}
         messages={messages}
@@ -63,9 +64,13 @@ export const Home = ({ navigation }: AppTabScreenProps<'HomeScreen'>) => {
         renderItem={renderItem}
         onEndReached={fetchNextPage}
         onEndReachedThreshold={0.1}
+        refreshControl={
+          <RefreshControl refreshing={loading} onRefresh={refresh} />
+        }
+        refreshing={loading}
         showsVerticalScrollIndicator={false}
         ListEmptyComponent={renderEmpty}
-        contentContainerStyle={{ flex: !postList.length ? 1 : undefined }}
+        contentContainerStyle={{ flex: !postList?.length ? 1 : undefined }}
       />
     </Screen>
   );

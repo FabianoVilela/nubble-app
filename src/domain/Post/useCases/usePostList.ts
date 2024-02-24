@@ -7,14 +7,47 @@ export const usePostList = () => {
   const [error, setError] = useState<boolean | null>(null);
   const [postList, setPostList] = useState<Post[]>([]);
   const [page, setPage] = useState(1);
+  const [hasNextPage, setHasNextPage] = useState(true);
 
-  const fetchData = async () => {
+  const fetchInitialData = async () => {
     try {
       setError(null);
       setLoading(true);
 
-      const posts = await postService.getList(page);
-      setPostList(prev => [...prev, ...posts]);
+      const { data, meta } = await postService.getList(1);
+
+      setPostList(data);
+
+      if (meta.hasNextPage) {
+        setPage(2);
+        setHasNextPage(true);
+      } else {
+        setHasNextPage(false);
+      }
+    } catch (er) {
+      setError(true);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const fetchNextPage = async () => {
+    if (loading || !hasNextPage) {
+      return;
+    }
+
+    try {
+      setLoading(true);
+      const { data, meta } = await postService.getList(page);
+      setPostList(prev => [...prev, ...data]);
+
+      if (meta.hasNextPage) {
+        setPage(2);
+        setHasNextPage(true);
+      } else {
+        setHasNextPage(false);
+      }
+
       setPage(prev => prev + 1);
     } catch (er) {
       setError(true);
@@ -23,22 +56,15 @@ export const usePostList = () => {
     }
   };
 
-  const fetchNextPage = () => {
-    if (!loading) {
-      fetchData();
-    }
-  };
-
   useEffect(() => {
-    fetchData();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    fetchInitialData();
   }, []);
 
   return {
     postList,
     error,
     loading,
-    refetch: fetchData,
+    refresh: fetchInitialData,
     fetchNextPage,
   };
 };
