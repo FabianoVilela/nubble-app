@@ -22,7 +22,13 @@ export const Home = ({ navigation }: AppTabScreenProps<'HomeScreen'>) => {
     error: 'Não foi possível carregar o feed 😢',
   };
 
-  const { postList, refresh, error, loading, fetchNextPage } = usePostList();
+  const {
+    list: postList,
+    refresh,
+    error,
+    loading,
+    fetchNextPage,
+  } = usePostList();
 
   const flatListRef = React.useRef<FlatList<Post>>(null);
   useScrollToTop(flatListRef);
