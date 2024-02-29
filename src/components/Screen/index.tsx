@@ -1,10 +1,10 @@
 import React from 'react';
-import { KeyboardAvoidingView, Platform } from 'react-native';
+import { KeyboardAvoidingView } from 'react-native';
 
 import { useNavigation } from '@react-navigation/native';
 
-import { useAppSafeArea } from '../../hooks/useAppSafeArea';
-import { useAppTheme } from '../../hooks/useAppTheme';
+import { useAppSafeArea, useAppTheme, usePlatform } from '@hooks';
+
 import { Box, TouchableOpacityBox, BoxProps } from '../Box';
 import { Icon } from '../Icon';
 import { Text } from '../Text';
@@ -28,6 +28,7 @@ export function Screen({
   ...boxProps
 }: ScreenProps) {
   const navigation = useNavigation();
+  const { isIos } = usePlatform();
   const { bottom, top } = useAppSafeArea();
   const { colors } = useAppTheme();
 
@@ -36,7 +37,7 @@ export function Screen({
   return (
     <KeyboardAvoidingView
       style={{ flex: 1 }}
-      behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
+      behavior={isIos ? 'padding' : undefined}>
       <Container backgroundColor={colors.background}>
         <Box
           paddingBottom="s24"
