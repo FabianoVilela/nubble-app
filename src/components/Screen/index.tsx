@@ -15,12 +15,14 @@ import {
 } from './components/ScreenContainer';
 
 interface ScreenProps extends BoxProps {
+  title?: string;
   children: React.ReactNode;
   canGoBack?: boolean;
   scrollable?: boolean;
 }
 
 export function Screen({
+  title,
   children,
   canGoBack = false,
   scrollable = false,
@@ -50,9 +52,13 @@ export function Screen({
               flexDirection="row"
               onPress={navigation.goBack}>
               <Icon name="arrowLeft" color="primary" />
-              <Text preset="paragraphMedium" semiBold ml="s8">
-                Voltar
-              </Text>
+              {title ? (
+                <Box flex={1} alignItems="center" ml="s8">
+                  <Text preset="headingSmall" color="grayBlack">
+                    {title}
+                  </Text>
+                </Box>
+              ) : null}
             </TouchableOpacityBox>
           )}
           {children}
