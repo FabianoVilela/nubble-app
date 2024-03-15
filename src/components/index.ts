@@ -13,3 +13,4 @@ export * from './TextInput';
 
 // App components
 export { default as PostItem } from './PostItem';
+export { default as ProfileAvatar } from './ProfileAvatar';
