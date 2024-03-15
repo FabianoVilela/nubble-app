@@ -46,6 +46,7 @@ export const Home = ({ navigation }: AppTabScreenProps<'HomeScreen'>) => {
           reactionCount={post.reactionCount}
         />
         <PostItem.Footer
+          id={post.id}
           author={post.author}
           text={post.text}
           commentCount={post.commentCount}
