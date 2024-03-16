@@ -59,6 +59,7 @@ export const usePaginatedList = <T>(
     error,
     loading,
     refresh: fetchInitialData,
+    hasNextPage,
     fetchNextPage,
   };
 };
