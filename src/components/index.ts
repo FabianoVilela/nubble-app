@@ -10,6 +10,7 @@ export * from './PasswordInput';
 export * from './Screen';
 export * from './Text';
 export * from './TextInput';
+export * from './TextMessage';
 
 // App components
 export { default as PostItem } from './PostItem';
