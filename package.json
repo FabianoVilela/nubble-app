@@ -21,6 +21,7 @@
     "@react-navigation/native-stack": "^6.9.13",
     "@shopify/restyle": "^2.4.2",
     "axios": "^1.6.7",
+    "date-fns": "^3.5.0",
     "react": "18.2.0",
     "react-hook-form": "^7.49.3",
     "react-native": "0.73.6",
