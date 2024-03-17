@@ -21,7 +21,7 @@ export const PostCommentItem = ({ postComment }: PostCommentItemProps) => {
         <Text preset="paragraphSmall" color="gray1">
           {message}
           <Text preset="paragraphSmall" color="gray3">
-            ` {createdAtRelative}`
+            {` ${createdAtRelative}`}
           </Text>
         </Text>
       </Box>

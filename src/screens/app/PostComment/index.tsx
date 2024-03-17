@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {
   FlatList,
   ListRenderItemInfo,
@@ -8,21 +8,18 @@ import {
 
 import { PostComment as PostCommentType, usePostCommentList } from '@domain';
 
-import {
-  Box,
-  EmptyState,
-  EmptyStateMessages,
-  Screen,
-  TextMessage,
-} from '@components';
+import { Box, EmptyState, EmptyStateMessages, Screen } from '@components';
 import { useAppSafeArea } from '@hooks';
 import { AppScreenProps } from '@routes';
 
-import { PostCommentItem, PostCommentBottom } from './components';
+import {
+  PostCommentItem,
+  PostCommentBottom,
+  PostCommentTextMessage,
+} from './components';
 
 export const PostComment = ({ route }: AppScreenProps<'PostCommentScreen'>) => {
   const postId = route.params?.postId;
-  const [message, setMessage] = useState('');
 
   const messages: EmptyStateMessages = {
     empty: 'Não há comentários no seu post',
@@ -51,9 +48,6 @@ export const PostComment = ({ route }: AppScreenProps<'PostCommentScreen'>) => {
     );
   };
 
-  // TODO: Implement send
-  const onPressSend = () => {};
-
   return (
     <Screen title="Comentários" canGoBack style={$screen}>
       <FlatList
@@ -69,12 +63,7 @@ export const PostComment = ({ route }: AppScreenProps<'PostCommentScreen'>) => {
       />
       {!loading ? (
         <Box paddingTop="s16" paddingBottom={hasNextPage ? 's16' : undefined}>
-          <TextMessage
-            placeholder="Adicione um comentário"
-            onPressSend={onPressSend}
-            value={message}
-            onChangeText={setMessage}
-          />
+          <PostCommentTextMessage postId={postId} />
         </Box>
       ) : null}
       <PostCommentBottom
