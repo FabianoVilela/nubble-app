@@ -1,8 +1,15 @@
 import { useState } from 'react';
 
+import { PostComment } from '@domain';
+
 import { postCommentService } from '../service';
 
-export const usePostCommentCreate = (postId: number) => {
+interface Options {
+  onSuccess?: (data: PostComment) => void;
+  onError?: (message: string) => void;
+}
+
+export const usePostCommentCreate = (postId: number, options?: Options) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<boolean | null>(null);
 
@@ -10,7 +17,12 @@ export const usePostCommentCreate = (postId: number) => {
     try {
       setLoading(true);
       setError(null);
-      await postCommentService.create(postId, message);
+
+      const postComment = await postCommentService.create(postId, message);
+
+      if (options?.onSuccess) {
+        options.onSuccess(postComment);
+      }
     } catch (er) {
       setError(true);
     } finally {
