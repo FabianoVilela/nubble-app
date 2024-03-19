@@ -29,9 +29,6 @@ export const PostComment = ({ route }: AppScreenProps<'PostCommentScreen'>) => {
   const { list, fetchNextPage, hasNextPage, error, loading, refresh } =
     usePostCommentList(postId);
 
-  // const {list, fetchNextPage, hasNextPage, refresh} =
-  // usePostCommentList(postId);
-
   const { bottom } = useAppSafeArea();
 
   const renderItem = ({ item }: ListRenderItemInfo<PostCommentType>) => {
