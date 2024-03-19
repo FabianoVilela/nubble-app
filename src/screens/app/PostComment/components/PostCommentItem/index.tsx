@@ -2,6 +2,7 @@ import React from 'react';
 import { Alert, Pressable } from 'react-native';
 
 import { PostComment, usePostCommentRemove, postCommentService } from '@domain';
+import { useToast } from '@services';
 
 import { Box, ProfileAvatar, Text } from '@components';
 
@@ -12,16 +13,17 @@ interface PostCommentItemProps {
   onRemoveComment: () => void;
 }
 
-// export const PostCommentItem = ({ postComment }: PostCommentItemProps) => {
-// const { author, message, createdAtRelative } = postComment;
 export const PostCommentItem = ({
   postComment,
   onRemoveComment,
   userId,
   postAuthorId,
 }: PostCommentItemProps) => {
+  const { showToast } = useToast();
   const { author, message, createdAtRelative } = postComment;
-  const { mutate } = usePostCommentRemove({ onSuccess: onRemoveComment });
+  const { mutate, error } = usePostCommentRemove({
+    onSuccess: onRemoveComment,
+  });
 
   const isAllowToDelete = postCommentService.isAllowToDelete(
     postComment,
@@ -35,6 +37,12 @@ export const PostCommentItem = ({
         text: 'Confirmar',
         onPress: () => {
           mutate({ postCommentId: postComment.id });
+          showToast({
+            message: error
+              ? 'Falha ao deletar o comentário'
+              : 'Cometário deletado com sucesso',
+            type: error ? 'error' : 'success',
+          });
         },
         style: 'destructive',
       },

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Keyboard } from 'react-native';
 
 import { usePostCommentCreate } from '@domain';
+import { useToast } from '@services';
 
 import { TextMessage } from '@components';
 
@@ -14,13 +15,22 @@ export const PostCommentTextMessage = ({
   postId,
   onAddComment,
 }: PostCommentTextMessageProps) => {
+  const { showToast } = useToast();
+
   const [message, setMessage] = useState('');
 
-  const { createComment } = usePostCommentCreate(postId, {
+  const { createComment, error } = usePostCommentCreate(postId, {
     onSuccess: () => {
       setMessage('');
       Keyboard.dismiss();
       onAddComment();
+
+      showToast({
+        message: error
+          ? 'Falha ao criar o comentário'
+          : 'Cometário criado com sucesso',
+        type: error ? 'error' : 'success',
+      });
     },
   });
 
