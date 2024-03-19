@@ -4,6 +4,10 @@ import { PostCommentAPI } from './types';
 
 const BASE_URL = 'user/post_comment';
 
+interface RemoveCommentResponse {
+  message: string;
+}
+
 const getList = async (
   post_id: number,
   pageParams?: PageParams,
@@ -26,11 +30,14 @@ const create = async (
     post_id,
     message,
   });
+
   return response.data;
 };
 
-const remove = async (postCommentId: number): Promise<{ message: string }> => {
-  const response = await api.delete<{ message: string }>(
+const remove = async (
+  postCommentId: number,
+): Promise<RemoveCommentResponse> => {
+  const response = await api.delete<RemoveCommentResponse>(
     `${BASE_URL}/${postCommentId}`,
   );
 

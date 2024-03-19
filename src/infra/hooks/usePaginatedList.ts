@@ -11,12 +11,14 @@ export const usePaginatedList = <T>(
   const [page, setPage] = useState(1);
   const [hasNextPage, setHasNextPage] = useState(true);
 
-  async function fetchInitialData() {
+  const fetchInitialData = async () => {
     try {
       setError(null);
       setLoading(true);
+
       const { data, meta } = await getList(1);
       setList(data);
+
       if (meta.hasNextPage) {
         setPage(2);
       } else {
@@ -27,16 +29,19 @@ export const usePaginatedList = <T>(
     } finally {
       setLoading(false);
     }
-  }
+  };
 
-  async function fetchNextPage() {
+  const fetchNextPage = async () => {
     if (loading || !hasNextPage) {
       return;
     }
+
     try {
       setLoading(true);
+
       const { data, meta } = await getList(page);
       setList(prev => [...prev, ...data]);
+
       if (meta.hasNextPage) {
         setPage(prev => prev + 1);
       } else {
@@ -47,7 +52,7 @@ export const usePaginatedList = <T>(
     } finally {
       setLoading(false);
     }
-  }
+  };
 
   useEffect(() => {
     fetchInitialData();

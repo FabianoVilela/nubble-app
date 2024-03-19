@@ -12,7 +12,8 @@
       "@domain": ["src/domain"],
       "@brand": ["src/brand"],
       "@types": ["src/types"],
-      "@utils": ["src/utils"]
+      "@utils": ["src/utils"],
+      "@infra": ["src/infra"],
     }
   }
 }
