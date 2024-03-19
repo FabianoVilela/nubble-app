@@ -10,7 +10,8 @@
     "test": "jest",
     "prepare": "husky install",
     "commitlint": "commitlint --edit",
-    "commit": "npx git-cz"
+    "commit": "npx git-cz",
+    "tsc": "tsc --noEmit"
   },
   "dependencies": {
     "@commitlint/cli": "^17.7.1",
