@@ -6,7 +6,11 @@ import {
   ViewStyle,
 } from 'react-native';
 
-import { PostComment as PostCommentType, usePostCommentList } from '@domain';
+import {
+  PostComment as PostCommentType,
+  usePostCommentList,
+  useUser,
+} from '@domain';
 
 import { Box, EmptyState, EmptyStateMessages, Screen } from '@components';
 import { useAppSafeArea } from '@hooks';
@@ -26,13 +30,24 @@ export const PostComment = ({ route }: AppScreenProps<'PostCommentScreen'>) => {
     error: 'Não foi possível carregar os comentários 😢',
   };
 
+  const postAuthorId = route.params.postAuthorId;
+
   const { list, fetchNextPage, hasNextPage, error, loading, refresh } =
     usePostCommentList(postId);
+
+  const { id } = useUser();
 
   const { bottom } = useAppSafeArea();
 
   const renderItem = ({ item }: ListRenderItemInfo<PostCommentType>) => {
-    return <PostCommentItem postComment={item} />;
+    return (
+      <PostCommentItem
+        postComment={item}
+        onRemoveComment={refresh}
+        userId={id}
+        postAuthorId={postAuthorId}
+      />
+    );
   };
 
   const keyExtractor = (item: { id: number }): string => item.id.toString();

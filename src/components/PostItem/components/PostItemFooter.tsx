@@ -8,14 +8,17 @@ interface PostItemFooterProps
 
 export const PostItemFooter = ({
   id,
-  author: { userName },
+  author: { id: postAuthorId, userName },
   text,
   commentCount,
 }: PostItemFooterProps) => {
   const navigation = useNavigation();
 
   const navigateToPostCommentScreen = () => {
-    navigation.navigate('PostCommentScreen', { postId: id });
+    navigation.navigate('PostCommentScreen', {
+      postId: id,
+      postAuthorId,
+    });
   };
 
   const renderAmountCommentsText = (amount: number) => {
