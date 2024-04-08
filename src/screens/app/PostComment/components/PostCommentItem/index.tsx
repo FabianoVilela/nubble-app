@@ -2,7 +2,7 @@ import React from 'react';
 import { Alert, Pressable } from 'react-native';
 
 import { PostComment, usePostCommentRemove, postCommentService } from '@domain';
-import { useToast } from '@services';
+import { useToastService } from '@services';
 
 import { Box, ProfileAvatar, Text } from '@components';
 
@@ -19,7 +19,7 @@ export const PostCommentItem = ({
   userId,
   postAuthorId,
 }: PostCommentItemProps) => {
-  const { showToast } = useToast();
+  const { showToast } = useToastService();
   const { author, message, createdAtRelative } = postComment;
   const { mutate, error } = usePostCommentRemove({
     onSuccess: onRemoveComment,

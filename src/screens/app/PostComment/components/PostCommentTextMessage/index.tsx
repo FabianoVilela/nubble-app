@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Keyboard } from 'react-native';
 
 import { usePostCommentCreate } from '@domain';
-import { useToast } from '@services';
+import { useToastService } from '@services';
 
 import { TextMessage } from '@components';
 
@@ -15,7 +15,7 @@ export const PostCommentTextMessage = ({
   postId,
   onAddComment,
 }: PostCommentTextMessageProps) => {
-  const { showToast } = useToast();
+  const { showToast } = useToastService();
 
   const [message, setMessage] = useState('');
 
