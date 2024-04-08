@@ -1,4 +1,4 @@
-export * from './User/types';
+export * from './User';
 
 export * from './Post/types';
 export * from './Post/service';

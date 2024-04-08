@@ -13,7 +13,9 @@ export type AppTabBottomTabParamList = {
   HomeScreen: undefined;
   NewPostScreen: undefined;
   FavoriteScreen: undefined;
-  ProfileScreen: undefined;
+  ProfileScreen: {
+    userId: number;
+  };
 };
 const Tab = createBottomTabNavigator<AppTabBottomTabParamList>();
 
@@ -21,6 +23,7 @@ export function AppTabNavigator() {
   const renderTabBar = (props: BottomTabBarProps) => {
     return <AppTabBar {...props} />;
   };
+
   return (
     <Tab.Navigator
       screenOptions={{
@@ -30,7 +33,11 @@ export function AppTabNavigator() {
       <Tab.Screen name="HomeScreen" component={Home} />
       <Tab.Screen name="NewPostScreen" component={NewPost} />
       <Tab.Screen name="FavoriteScreen" component={Favorite} />
-      <Tab.Screen name="ProfileScreen" component={Profile} />
+      <Tab.Screen
+        name="ProfileScreen"
+        component={Profile}
+        initialParams={{ userId: 1 }} // TODO: Replace with authenticated user id
+      />
     </Tab.Navigator>
   );
 }
