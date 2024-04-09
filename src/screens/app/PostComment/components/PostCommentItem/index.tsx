@@ -7,22 +7,32 @@ import { useToastService } from '@services';
 import { Box, ProfileAvatar, Text } from '@components';
 
 interface PostCommentItemProps {
+  postId: number;
   postComment: PostComment;
   userId: number;
   postAuthorId: number;
-  onRemoveComment: () => void;
 }
 
 export const PostCommentItem = ({
+  postId,
   postComment,
-  onRemoveComment,
   userId,
   postAuthorId,
 }: PostCommentItemProps) => {
   const { showToast } = useToastService();
   const { author, message, createdAtRelative } = postComment;
-  const { mutate, isError } = usePostCommentRemove({
-    onSuccess: onRemoveComment,
+  const { removeComment } = usePostCommentRemove(postId, {
+    onSuccess: () =>
+      showToast({
+        message: 'Cometário deletado com sucesso',
+        type: 'success',
+      }),
+    onError: () => {
+      showToast({
+        message: 'Falha ao deletar o comentário',
+        type: 'error',
+      });
+    },
   });
 
   const isAllowToDelete = postCommentService.isAllowToDelete(
@@ -36,13 +46,7 @@ export const PostCommentItem = ({
       {
         text: 'Confirmar',
         onPress: () => {
-          mutate({ postCommentId: postComment.id });
-          showToast({
-            message: isError
-              ? 'Falha ao deletar o comentário'
-              : 'Cometário deletado com sucesso',
-            type: isError ? 'error' : 'success',
-          });
+          removeComment(postComment.id);
         },
         style: 'destructive',
       },

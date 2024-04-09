@@ -42,8 +42,8 @@ export const PostComment = ({ route }: AppScreenProps<'PostCommentScreen'>) => {
   const renderItem = ({ item }: ListRenderItemInfo<PostCommentType>) => {
     return (
       <PostCommentItem
+        postId={postId}
         postComment={item}
-        onRemoveComment={refresh}
         userId={id}
         postAuthorId={postAuthorId}
       />
