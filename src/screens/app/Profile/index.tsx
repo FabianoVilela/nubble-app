@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { useUserGetById } from '@domain';
+import { useGetUserById } from '@domain';
 
 import {
   ActivityIndicator,
@@ -14,13 +14,15 @@ import { AppScreenProps } from '@routes';
 export function Profile({ route }: AppScreenProps<'ProfileScreen'>) {
   const userId = route.params.userId;
 
-  const { loading, error, user } = useUserGetById(userId);
+  const { isLoading, isError, data: user } = useGetUserById(userId);
 
   return (
     <Screen canGoBack>
-      {loading && <ActivityIndicator />}
-      {error && !loading && <Text> error ao carregar perfil do usuário</Text>}
-      {user && !loading && (
+      {isLoading && <ActivityIndicator />}
+      {isError && !isLoading && (
+        <Text>Error ao carregar perfil do usuário</Text>
+      )}
+      {!isError && !isLoading && user && (
         <Box alignItems="center">
           <ProfileAvatar
             imageURL={user.profileURL}
