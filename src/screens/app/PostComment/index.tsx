@@ -32,7 +32,7 @@ export const PostComment = ({ route }: AppScreenProps<'PostCommentScreen'>) => {
 
   const postAuthorId = route.params.postAuthorId;
 
-  const { list, fetchNextPage, hasNextPage, error, loading, refresh } =
+  const { list, fetchNextPage, hasNextPage, isError, isLoading, refresh } =
     usePostCommentList(postId);
 
   const { id } = useUser();
@@ -56,8 +56,8 @@ export const PostComment = ({ route }: AppScreenProps<'PostCommentScreen'>) => {
     return (
       <EmptyState
         refetch={refresh}
-        error={error}
-        loading={loading}
+        error={isError}
+        loading={isLoading}
         messages={messages}
       />
     );
@@ -76,13 +76,13 @@ export const PostComment = ({ route }: AppScreenProps<'PostCommentScreen'>) => {
           paddingBottom: bottom,
         }}
       />
-      {!loading ? (
+      {!isLoading ? (
         <Box paddingTop="s16" paddingBottom={hasNextPage ? 's16' : undefined}>
           <PostCommentTextMessage postId={postId} onAddComment={refresh} />
         </Box>
       ) : null}
       <PostCommentBottom
-        hasNextPage={hasNextPage && !loading}
+        hasNextPage={hasNextPage && !isLoading}
         fetchNextPage={fetchNextPage}
       />
     </Screen>

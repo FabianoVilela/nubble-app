@@ -1,6 +1,6 @@
 import { Post, postService } from '@domain';
-import { usePaginatedList } from '@infra';
+import { QueryKeys, usePaginatedList } from '@infra';
 
 export const usePostList = () => {
-  return usePaginatedList<Post>(postService.getList);
+  return usePaginatedList<Post>([QueryKeys.PostList], postService.getList);
 };
