@@ -78,7 +78,7 @@ export const PostComment = ({ route }: AppScreenProps<'PostCommentScreen'>) => {
       />
       {!isLoading ? (
         <Box paddingTop="s16" paddingBottom={hasNextPage ? 's16' : undefined}>
-          <PostCommentTextMessage postId={postId} onAddComment={refresh} />
+          <PostCommentTextMessage postId={postId} />
         </Box>
       ) : null}
       <PostCommentBottom

@@ -5,17 +5,21 @@ export interface MutationOptions<TData> {
   onError?: (message: string) => void;
   errorMessage?: string;
 }
+
+/**
+ * @deprecated use useMutation from `@tanstack/react-query`
+ */
 export const useMutation = <TVariables, TData>(
   mutation: (variables: TVariables) => Promise<TData>,
   options?: MutationOptions<TData>,
 ) => {
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<boolean | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [isError, setIsError] = useState<boolean | null>(null);
 
   const mutate = async (variables: TVariables) => {
     try {
-      setLoading(true);
-      setError(null);
+      setIsLoading(true);
+      setIsError(null);
 
       const data = await mutation(variables);
 
@@ -27,15 +31,15 @@ export const useMutation = <TVariables, TData>(
         options.onError(options?.errorMessage || '');
       }
 
-      setError(true);
+      setIsError(true);
     } finally {
-      setLoading(false);
+      setIsLoading(false);
     }
   };
 
   return {
     mutate,
-    loading,
-    error,
+    isLoading,
+    isError,
   };
 };

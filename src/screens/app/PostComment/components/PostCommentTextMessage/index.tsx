@@ -8,28 +8,25 @@ import { TextMessage } from '@components';
 
 interface PostCommentTextMessageProps {
   postId: number;
-  onAddComment: () => void;
 }
 
 export const PostCommentTextMessage = ({
   postId,
-  onAddComment,
 }: PostCommentTextMessageProps) => {
   const { showToast } = useToastService();
 
   const [message, setMessage] = useState('');
 
-  const { createComment, error } = usePostCommentCreate(postId, {
+  const { createComment, isError } = usePostCommentCreate(postId, {
     onSuccess: () => {
       setMessage('');
       Keyboard.dismiss();
-      onAddComment();
 
       showToast({
-        message: error
+        message: isError
           ? 'Falha ao criar o comentário'
           : 'Cometário criado com sucesso',
-        type: error ? 'error' : 'success',
+        type: isError ? 'error' : 'success',
       });
     },
   });

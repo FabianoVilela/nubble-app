@@ -21,7 +21,7 @@ export const PostCommentItem = ({
 }: PostCommentItemProps) => {
   const { showToast } = useToastService();
   const { author, message, createdAtRelative } = postComment;
-  const { mutate, error } = usePostCommentRemove({
+  const { mutate, isError } = usePostCommentRemove({
     onSuccess: onRemoveComment,
   });
 
@@ -38,10 +38,10 @@ export const PostCommentItem = ({
         onPress: () => {
           mutate({ postCommentId: postComment.id });
           showToast({
-            message: error
+            message: isError
               ? 'Falha ao deletar o comentário'
               : 'Cometário deletado com sucesso',
-            type: error ? 'error' : 'success',
+            type: isError ? 'error' : 'success',
           });
         },
         style: 'destructive',
