@@ -33,7 +33,7 @@ export const mapScreenToProps: Record<
       unfocused: 'bookmark',
     },
   },
-  ProfileScreen: {
+  MyProfileScreen: {
     label: 'Perfil',
     icon: {
       focused: 'profileFill',

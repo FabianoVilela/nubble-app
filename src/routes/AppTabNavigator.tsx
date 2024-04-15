@@ -5,7 +5,7 @@ import {
   createBottomTabNavigator,
 } from '@react-navigation/bottom-tabs';
 
-import { Favorite, Home, NewPost, Profile } from '@screens';
+import { Favorite, Home, NewPost, MyProfile } from '@screens';
 
 import { AppTabBar } from './AppTabBar';
 
@@ -13,9 +13,7 @@ export type AppTabBottomTabParamList = {
   HomeScreen: undefined;
   NewPostScreen: undefined;
   FavoriteScreen: undefined;
-  ProfileScreen: {
-    userId: number;
-  };
+  MyProfileScreen: undefined;
 };
 const Tab = createBottomTabNavigator<AppTabBottomTabParamList>();
 
@@ -33,11 +31,7 @@ export function AppTabNavigator() {
       <Tab.Screen name="HomeScreen" component={Home} />
       <Tab.Screen name="NewPostScreen" component={NewPost} />
       <Tab.Screen name="FavoriteScreen" component={Favorite} />
-      <Tab.Screen
-        name="ProfileScreen"
-        component={Profile}
-        initialParams={{ userId: 1 }} // TODO: Replace with authenticated user id
-      />
+      <Tab.Screen name="MyProfileScreen" component={MyProfile} />
     </Tab.Navigator>
   );
 }
