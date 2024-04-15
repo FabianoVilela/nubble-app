@@ -11,7 +11,7 @@ const signIn = async (
 
     return authAdapter.toAuthCredentials(authCredentialsAPI);
   } catch (error) {
-    throw new Error('email ou senha inválido');
+    throw new Error('E-mail ou senha inválida');
   }
 };
 

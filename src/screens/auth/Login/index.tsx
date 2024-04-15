@@ -1,7 +1,8 @@
 import React from 'react';
-import { Alert } from 'react-native';
 
+import { useAuthSignIn } from '@domain';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useToastService } from '@services';
 import { useForm } from 'react-hook-form';
 
 import {
@@ -16,6 +17,12 @@ import { AuthScreenProps } from '@routes';
 import { LoginSchema, loginSchema } from './schema/index';
 
 export function Login({ navigation }: AuthScreenProps<'LoginScreen'>) {
+  const { showToast } = useToastService();
+
+  const { isLoading, signIn } = useAuthSignIn({
+    onError: message => showToast({ message, type: 'error' }),
+  });
+
   const { control, formState, handleSubmit } = useForm<LoginSchema>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
@@ -25,17 +32,18 @@ export function Login({ navigation }: AuthScreenProps<'LoginScreen'>) {
     mode: 'onChange',
   });
 
-  function submitForm({ email, password }: LoginSchema) {
-    Alert.alert(`Email: ${email} ${'\n'} Senha: ${password}`);
-  }
+  const submitForm = ({ email, password }: LoginSchema) => {
+    signIn({ email, password });
+  };
 
-  function navigateToSignUpScreen() {
+  const navigateToSignUpScreen = () => {
     navigation.navigate('SignUpScreen');
-  }
+  };
 
-  function navigateToForgotPasswordScreen() {
+  const navigateToForgotPasswordScreen = () => {
     navigation.navigate('ForgotPasswordScreen');
-  }
+  };
+
   return (
     <Screen scrollable>
       <Text marginBottom="s8" preset="headingLarge">
@@ -70,6 +78,7 @@ export function Login({ navigation }: AuthScreenProps<'LoginScreen'>) {
       </Text>
 
       <Button
+        loading={isLoading}
         disabled={!formState.isValid}
         onPress={handleSubmit(submitForm)}
         marginTop="s48"
