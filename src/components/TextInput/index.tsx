@@ -6,24 +6,30 @@ import {
   TextStyle,
 } from 'react-native';
 
-import { useAppTheme } from '../../hooks/useAppTheme';
+import { useAppTheme } from '@hooks';
+import { theme } from '@theme';
+
 import { Box, BoxProps } from '../Box';
 import { $fontFamily, $fontSizes, Text } from '../Text';
 
 export interface TextInputProps extends RNTextInputProps {
-  label: string;
+  label?: string;
   errorMessage?: string;
   RightComponent?: React.ReactElement;
+  LeftComponent?: React.ReactElement;
   boxProps?: BoxProps;
+  containerProps?: BoxProps;
 }
 
-export function TextInput({
+export const TextInput = ({
   label,
   errorMessage,
   RightComponent,
+  LeftComponent,
   boxProps,
+  containerProps,
   ...rnTextInputProps
-}: TextInputProps) {
+}: TextInputProps) => {
   const { colors } = useAppTheme();
   const inputRef = useRef<RNTextInput>(null);
 
@@ -35,17 +41,27 @@ export function TextInput({
     borderRadius: 's12',
   };
 
-  function focusInput() {
+  const focusInput = () => {
     inputRef.current?.focus();
-  }
+  };
 
   return (
-    <Box {...boxProps}>
+    <Box flexGrow={1} flexShrink={1} {...boxProps}>
       <Pressable onPress={focusInput}>
-        <Text preset="paragraphMedium" marginBottom="s4">
-          {label}
-        </Text>
-        <Box {...$textInputContainer}>
+        {label && (
+          <Text preset="paragraphMedium" marginBottom="s4">
+            {label}
+          </Text>
+        )}
+        <Box
+          {...$textInputContainer}
+          {...containerProps}
+          backgroundColor="grayWhite">
+          {LeftComponent && (
+            <Box justifyContent="center" mr="s16">
+              {LeftComponent}
+            </Box>
+          )}
           <RNTextInput
             ref={inputRef}
             placeholderTextColor={colors.gray2}
@@ -67,13 +83,13 @@ export function TextInput({
       </Pressable>
     </Box>
   );
-}
+};
 
 export const $textInputStyle: TextStyle = {
   padding: 0,
   flexGrow: 1,
   flexShrink: 1,
-
+  color: theme.colors.grayBlack,
   fontFamily: $fontFamily.regular,
   ...$fontSizes.paragraphMedium,
 };
