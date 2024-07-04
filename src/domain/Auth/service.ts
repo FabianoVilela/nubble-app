@@ -2,7 +2,11 @@ import { api } from '@api';
 
 import { authAdapter } from './adapter';
 import { authApi } from './api';
-import { AuthCredentials } from './types';
+import { AuthCredentials, SignUpData } from './types';
+
+const signUp = async (signUpData: SignUpData): Promise<void> => {
+  await authApi.signUp(signUpData);
+};
 
 const signIn = async (
   email: string,
@@ -32,6 +36,7 @@ const removeToken = () => {
 };
 
 export const authService = {
+  signUp,
   signIn,
   signOut,
   updateToken,
