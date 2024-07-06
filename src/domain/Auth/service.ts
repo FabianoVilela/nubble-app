@@ -23,7 +23,6 @@ const signIn = async (
 
 const signOut = async (): Promise<string> => {
   const message = await authApi.signOut();
-
   return message;
 };
 
@@ -35,10 +34,22 @@ const removeToken = () => {
   api.defaults.headers.common.Authorization = null;
 };
 
+const isUserNameAvailable = async (username: string): Promise<boolean> => {
+  const { isAvailable } = await authApi.isUserNameAvailable({ username });
+  return isAvailable;
+};
+
+const isEmailAvailable = async (email: string): Promise<boolean> => {
+  const { isAvailable } = await authApi.isEmailAvailable({ email });
+  return isAvailable;
+};
+
 export const authService = {
   signUp,
   signIn,
   signOut,
   updateToken,
   removeToken,
+  isUserNameAvailable,
+  isEmailAvailable,
 };
