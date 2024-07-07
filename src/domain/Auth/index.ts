@@ -3,5 +3,6 @@ export * from './useCases/useAuthSignIn';
 export * from './useCases/useAuthSignOut';
 export * from './useCases/useAuthSignUp';
 export * from './useCases/useAuthIsValueAvaible';
+export * from './useCases/useAuthRequestNewPassword';
 export * from './types';
 export * from './service';

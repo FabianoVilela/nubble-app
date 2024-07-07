@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { useAuthSignUp, useAuthIsUsernameAvailable } from '@domain';
+import { useAuthSignUp } from '@domain';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 
@@ -15,6 +15,7 @@ import {
 import { useResetNavigationSuccess } from '@hooks';
 import { AuthScreenProps, AuthStackParamList } from '@routes';
 
+import { useAsyncValidation } from './hooks/useAsyncValidation';
 import { signUpSchema, SignUpSchema } from './schema';
 
 const resetParam: AuthStackParamList['SuccessScreen'] = {
@@ -41,18 +42,26 @@ export const SignUp = ({}: AuthScreenProps<'SignUpScreen'>) => {
     },
   });
   const { reset } = useResetNavigationSuccess();
-  const { control, formState, handleSubmit, watch } = useForm<SignUpSchema>({
-    resolver: zodResolver(signUpSchema),
-    defaultValues,
-    mode: 'onChange',
-  });
+  const { control, formState, handleSubmit, watch, getFieldState } =
+    useForm<SignUpSchema>({
+      resolver: zodResolver(signUpSchema),
+      defaultValues,
+      mode: 'onChange',
+    });
 
   const submitForm = (formValues: SignUpSchema) => {
     signUp(formValues);
   };
 
-  const username = watch('username');
-  const usernameQuery = useAuthIsUsernameAvailable({ username });
+  const { usernameValidation, emailValidation } = useAsyncValidation({
+    watch,
+    getFieldState,
+  });
+
+  const isFormValid =
+    !formState.isValid ||
+    usernameValidation.notReady ||
+    emailValidation.notReady;
 
   return (
     <Screen canGoBack scrollable>
@@ -67,9 +76,12 @@ export const SignUp = ({}: AuthScreenProps<'SignUpScreen'>) => {
         placeholder="@"
         boxProps={{ mb: 's20' }}
         RightComponent={
-          usernameQuery.isFetching ? (
+          usernameValidation.isFetching ? (
             <ActivityIndicator size="small" />
           ) : undefined
+        }
+        errorMessage={
+          usernameValidation.errorMessage ? 'username indisponível' : undefined
         }
       />
       <FormTextInput
@@ -94,6 +106,14 @@ export const SignUp = ({}: AuthScreenProps<'SignUpScreen'>) => {
         label="E-mail"
         placeholder="Digite seu e-mail"
         boxProps={{ mb: 's20' }}
+        RightComponent={
+          emailValidation.isFetching ? (
+            <ActivityIndicator size="small" />
+          ) : undefined
+        }
+        errorMessage={
+          emailValidation.errorMessage ? 'e-mail indisponível' : undefined
+        }
       />
       <FormPasswordInput
         control={control}
@@ -105,7 +125,7 @@ export const SignUp = ({}: AuthScreenProps<'SignUpScreen'>) => {
 
       <Button
         loading={isLoading}
-        disabled={!formState.isValid}
+        disabled={isFormValid}
         onPress={handleSubmit(submitForm)}
         title="Criar uma conta"
       />

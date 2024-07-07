@@ -25,7 +25,7 @@ export const useAuthSignUp = (options?: MutationOptions<void>) => {
   };
 
   return {
-    isLoading: mutation.isLoading,
+    isLoading: mutation.isPending,
     signUp,
   };
 };

@@ -11,7 +11,9 @@
     "prepare": "husky install",
     "commitlint": "commitlint --edit",
     "commit": "npx git-cz",
-    "tsc": "tsc --noEmit"
+    "tsc": "tsc --noEmit",
+    "art:3333": "adb reverse tcp:3333 tcp:3333",
+    "ap": "adb shell input text"
   },
   "dependencies": {
     "@commitlint/cli": "^17.7.1",
