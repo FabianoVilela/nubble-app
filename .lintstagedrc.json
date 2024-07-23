@@ -1,6 +1,10 @@
 {
-  "**/*.{js,jsx,ts,tsx}":[ 
-    "npx prettier --write",
-    "npx eslint --fix"
+  "**/*.{js,ts,cjs,mjs,d.cts,d.mts,jsx,tsx,json,jsonc}": [
+    "npx @biomejs/biome check --files-ignore-unknown=true",
+    "npx @biomejs/biome check --write --no-errors-on-unmatched",
+    "npx @biomejs/biome check --write --organize-imports-enabled=false --no-errors-on-unmatched",
+    "npx @biomejs/biome check --write --unsafe --no-errors-on-unmatched",
+    "npx @biomejs/biome format --write --no-errors-on-unmatched",
+    "npx @biomejs/biome lint --write --no-errors-on-unmatched"
   ]
 }
