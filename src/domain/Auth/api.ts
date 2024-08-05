@@ -1,19 +1,21 @@
-import { api } from '@api';
+import { RequestConfig, api } from '@api';
 
 import { UserAPI } from '../User';
 
 import {
   AuthCredentialsAPI,
-  SignUpDataAPI,
   FieldIsAvailableAPI,
   ForgotPasswordParam,
+  SignUpDataAPI,
 } from './types';
 
-const signIn = async (
-  email: string,
-  password: string,
-): Promise<AuthCredentialsAPI> => {
-  const response = await api.post<AuthCredentialsAPI>('login', {
+const REFRESH_TOKEN_URL = 'auth/refresh-token';
+
+const signIn = async (email: string, password: string): Promise<AuthCredentialsAPI> => {
+  email = email.trim();
+  password = password.trim();
+
+  const response = await api.post<AuthCredentialsAPI>('auth/login', {
     email,
     password,
   });
@@ -22,20 +24,23 @@ const signIn = async (
 };
 
 const signOut = async (): Promise<string> => {
-  const response = await api.get<string>('profile/logout');
+  const response = await api.get<string>('auth/profile/logout');
 
   return response.data;
 };
 
 const signUp = async (data: SignUpDataAPI): Promise<UserAPI> => {
-  const response = await api.post<UserAPI>('register', data);
+  data.email = data.email.trim();
+  data.password = data.password.trim();
+
+  const response = await api.post<UserAPI>('auth/register', data);
   return response.data;
 };
 
 const isUserNameAvailable = async (params: {
   username: string;
 }): Promise<FieldIsAvailableAPI> => {
-  const response = await api.get<FieldIsAvailableAPI>('validate-username', {
+  const response = await api.get<FieldIsAvailableAPI>('auth/validate-username', {
     params,
   });
 
@@ -45,7 +50,7 @@ const isUserNameAvailable = async (params: {
 const isEmailAvailable = async (params: {
   email: string;
 }): Promise<FieldIsAvailableAPI> => {
-  const response = await api.get<FieldIsAvailableAPI>('validate-email', {
+  const response = await api.get<FieldIsAvailableAPI>('auth/validate-email', {
     params,
   });
 
@@ -55,12 +60,27 @@ const isEmailAvailable = async (params: {
 const forgotPassword = async (
   params: ForgotPasswordParam,
 ): Promise<{ message: string }> => {
-  const response = await api.post<{ message: string }>(
-    'forgot-password',
-    params,
-  );
+  const response = await api.post<{ message: string }>('auth/forgot-password', params);
 
   return response.data;
+};
+
+const refreshToken = async (token: string): Promise<AuthCredentialsAPI> => {
+  const response = await api.post<AuthCredentialsAPI>(REFRESH_TOKEN_URL, {
+    refreshToken: token,
+  });
+
+  return response.data;
+};
+
+/**
+ * @param axiosConfig [AxiosRequestConfig](https://axios-http.com/docs/req_config) - The Axios request configuration
+ * @returns  Check the config URL property to returns if is a refresh token request
+ */
+const isRefreshTokenRequest = (request: RequestConfig): boolean => {
+  const url = request.url;
+
+  return url === REFRESH_TOKEN_URL;
 };
 
 export const authApi = {
@@ -70,4 +90,6 @@ export const authApi = {
   isUserNameAvailable,
   isEmailAvailable,
   forgotPassword,
+  refreshToken,
+  isRefreshTokenRequest,
 };

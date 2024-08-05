@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { useAuthSignUp } from '@domain';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
@@ -16,7 +14,7 @@ import { useResetNavigationSuccess } from '@hooks';
 import { AuthScreenProps, AuthStackParamList } from '@routes';
 
 import { useAsyncValidation } from './hooks/useAsyncValidation';
-import { signUpSchema, SignUpSchema } from './schema';
+import { SignUpSchema, signUpSchema } from './schema';
 
 const resetParam: AuthStackParamList['SuccessScreen'] = {
   title: 'Sua conta foi criada com sucesso!',
@@ -35,7 +33,7 @@ const defaultValues: SignUpSchema = {
   password: '',
 };
 
-export const SignUp = ({}: AuthScreenProps<'SignUpScreen'>) => {
+export const SignUp = ({ }: AuthScreenProps<'SignUpScreen'>) => {
   const { signUp, isLoading } = useAuthSignUp({
     onSuccess: () => {
       reset(resetParam);

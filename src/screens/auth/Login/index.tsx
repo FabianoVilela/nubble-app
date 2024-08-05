@@ -1,16 +1,14 @@
-import React from 'react';
-
 import { useAuthSignIn } from '@domain';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useToastService } from '@services';
 import { useForm } from 'react-hook-form';
 
 import {
-  Text,
-  Screen,
   Button,
-  FormTextInput,
   FormPasswordInput,
+  FormTextInput,
+  Screen,
+  Text,
 } from '@components';
 import { AuthScreenProps } from '@routes';
 

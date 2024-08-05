@@ -8,10 +8,7 @@ const signUp = async (signUpData: SignUpData): Promise<void> => {
   await authApi.signUp(signUpData);
 };
 
-const signIn = async (
-  email: string,
-  password: string,
-): Promise<AuthCredentials> => {
+const signIn = async (email: string, password: string): Promise<AuthCredentials> => {
   try {
     const authCredentialsAPI = await authApi.signIn(email, password);
 
@@ -49,6 +46,13 @@ const requestNewPassword = async (email: string): Promise<string> => {
   return message;
 };
 
+const authenticateByRefreshToken = async (
+  refreshToken: string,
+): Promise<AuthCredentials> => {
+  const acAPI = await authApi.refreshToken(refreshToken);
+  return authAdapter.toAuthCredentials(acAPI);
+};
+
 export const authService = {
   signUp,
   signIn,
@@ -58,4 +62,5 @@ export const authService = {
   isUserNameAvailable,
   isEmailAvailable,
   requestNewPassword,
+  authenticateByRefreshToken,
 };
